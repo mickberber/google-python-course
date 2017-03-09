@@ -48,10 +48,19 @@ def not_bad(s):
 # e.g. 'abcde', the front half is 'abc', the back half 'de'.
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
+def splitter(string):
+    middle = (len(string) / 2) + 1
+    if len(string) % 2 == 0:
+        middle = (len(string) / 2)
+    front = string[:middle]
+    back = string[middle:]
+    return [front, back]
+
 def front_back(a, b):
   # +++your code here+++
-  return
-
+  split_a = splitter(a)
+  split_b = splitter(b)
+  return split_a[0] + split_b[0] + split_a[1] + split_b[1]
 
 # Simple provided test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
