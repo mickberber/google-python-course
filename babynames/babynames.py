@@ -43,16 +43,27 @@ def extract_names(filename):
   # +++your code here+++
   f = open(filename, 'rU')
   string = f.read()
+  f.close()
 
   year = re.search(r'Popularity\sin\s(\w+)', string)
   names = re.findall(r'<td>(\w+)</td><td>(\w+)</td><td>(\w+)</td>', string)
 
-  namelist = []
+  namelist = [year.group(1)]
   for name in names:
       namelist.append(name[1] + ' ' + name[0])
       namelist.append(name[2] + ' ' + name[0])
-      
+
   return sorted(namelist)
+
+def create_summary_files(filename, namelist):
+    f = open(filename + '.summary','w+')
+    i = 1
+    while i < len(namelist):
+        f.write(namelist[i] + '\n')
+        i += 1
+
+    f.close()
+    return
 
 
 def main():
@@ -74,7 +85,13 @@ def main():
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
-  extract_names(args[0])
+  if summary:
+      i = 0
+      while i < len(args):
+          create_summary_files(args[i], extract_names(args[i]))
+          i += 1
+  else:
+      print extract_names(args[0])
 
 if __name__ == '__main__':
   main()
