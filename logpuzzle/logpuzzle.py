@@ -25,7 +25,19 @@ def read_urls(filename):
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
   # +++your code here+++
-  
+  urls = []
+  f = open(filename, 'rU')
+  for line in f:
+      match = re.search(r'GET\s\S+\s', line)
+      if match:
+          url = match.group()
+          newmatch = re.search(r'.+puzzle.+', url)
+          if newmatch:
+              if url not in urls:
+                 urls.append(url)
+  return sorted(urls)
+
+
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
@@ -36,7 +48,7 @@ def download_images(img_urls, dest_dir):
   Creates the directory if necessary.
   """
   # +++your code here+++
-  
+
 
 def main():
   args = sys.argv[1:]
