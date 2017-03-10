@@ -33,15 +33,24 @@ def to_directory(files, destination):
     mkdir_cmd = 'mkdir ' + destpath
     (status, output) = commands.getstatusoutput(mkdir_cmd)
     if status:
-        sys.stderr.write('there was an error:' + output)
+        sys.stderr.write('there was an error: ' + output)
         sys.exit(1)
 
     for f in files:
         cp_cmd = 'cp ' + f + ' ' + destpath
         (st, op) = commands.getstatusoutput(cp_cmd)
         if st:
-            sys.stderr.write('there was an error:' + op)
+            sys.stderr.write('there was an error: ' + op)
             sys.exit(1)
+    return
+
+def to_zip(files, destination):
+    destpath = os.path.abspath(destination)
+    zip_cmd = 'zip -j ' + destpath + ' ' + ' '.join(files)
+    (status, op) = commands.getstatusoutput(zip_cmd)
+    if status:
+        sys.stderr.write('there was an error: ' + output)
+        sys.exit(1)
     return
 
 def main():
@@ -68,6 +77,8 @@ def main():
   if args[0] == '--tozip' and len(args) == 3:
       source = args[1]
       destination = args[2]
+      files = get_files(source)
+      to_zip(files, destination)
       return
 
   if len(args) == 0:
