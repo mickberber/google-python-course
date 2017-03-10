@@ -28,13 +28,13 @@ def read_urls(filename):
   urls = []
   f = open(filename, 'rU')
   for line in f:
-      match = re.search(r'GET\s\S+\s', line)
+      match = re.search(r'GET\s(\S+)\s', line)
       if match:
-          url = match.group()
+          url = match.group(1)
           newmatch = re.search(r'.+puzzle.+', url)
           if newmatch:
               if url not in urls:
-                 urls.append(url)
+                 urls.append('http://' + filename + url)
   return sorted(urls)
 
 
@@ -48,6 +48,10 @@ def download_images(img_urls, dest_dir):
   Creates the directory if necessary.
   """
   # +++your code here+++
+  print img_urls[0]
+  uf = urllib.urlopen(img_urls[0])
+  print uf.read()
+  return
 
 
 def main():
