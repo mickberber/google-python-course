@@ -17,8 +17,16 @@ import commands
 
 # +++your code here+++
 # Write functions and modify main() to call them
-
-
+def get_files(dir):
+    filenames = os.listdir(dir)
+    paths = []
+    for filename in filenames:
+        match = re.search(r'__\w+__', filename)
+        if match:
+            path = os.path.join(dir, filename)
+            abspath = os.path.abspath(path)
+            paths.append(abspath)
+    print paths
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -50,6 +58,7 @@ def main():
 
   # +++your code here+++
   # Call your functions
-  
+  get_files(args[0])
+
 if __name__ == "__main__":
   main()
